@@ -5,6 +5,10 @@ import jwt from "jsonwebtoken";
 import userSchema from "@/validations/userSchema";
 
 export async function POST(req) {
+  const date = new Date();
+  date.setTime(date.getTime() + 3 * 60 * 60 * 1000); // 3 saat ekle
+  const expiryDate = new Date(date.getTime() + 3600 * 1000); // 1 saat daha ekle (çerez süresi)
+
   try {
     const { email, password } = await req.json();
 
@@ -33,11 +37,15 @@ export async function POST(req) {
     const token = jwt.sign(
       { email: user.email },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "1h" } // Token 1 saat sonra geçersiz olur
+      { expiresIn: process.env.NEXT_PUBLIC_JWT_EXPIRES } // Token 1 saat sonra geçersiz olur
     );
 
     const response = NextResponse.json({ message: "Giriş başarılı.", status: 201 });
-    response.headers.set("Set-Cookie", `token=${token}; HttpOnly; Secure; Path=/; Max-Age=3600`);
+
+    response.headers.set(
+      "Set-Cookie",
+      `token=${token}; HttpOnly; Path=/; Expires=${expiryDate.toUTCString()}; SameSite=Lax; ${process.env.NODE_ENV === "production" ? "; Secure" : ""}`
+    );
 
     return response;
   } catch (error) {
