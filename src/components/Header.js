@@ -24,7 +24,7 @@ export default function Header() {
         <Link href="/">Anasayfa</Link>
         {authenticatedUser?.authenticatedUser?.email?.length >= 1 ? (
           <div className="flex items-center gap-4">
-            <p>{authenticatedUser?.authenticatedUser?.email}</p>
+            <Link href="/auth/profile">{authenticatedUser?.authenticatedUser?.email}</Link>
             <button className="bg-white text-black px-4 py-2 rounded cursor-pointer" onClick={logoutHandler}>
               Çıkış Yap
             </button>
