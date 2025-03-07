@@ -37,15 +37,8 @@ export async function POST(req) {
       },
     });
 
-    // JWT oluştur
-    const token = jwt.sign(
-      { userId: newUser.id, userName: newUser.userName },
-      process.env.JWT_SECRET_KEY,
-      { expiresIn: "1h" } // Token 1 saat sonra geçersiz olur
-    );
-
-    // Token ile birlikte yanıt dön
-    return NextResponse.json({ message: "Kullanıcı başarıyla oluşturuldu.", user: newUser, token }, { status: 201 });
+    // Kullanıcı oluşturulduktan sonra sadece kullanıcı bilgisi döndürülür
+    return NextResponse.json({ message: "Kullanıcı başarıyla oluşturuldu.", user: newUser }, { status: 201 });
   } catch (error) {
     console.error("Hata:", error);
     return NextResponse.json({ error: "Bir hata oluştu." }, { status: 500 });
