@@ -21,7 +21,9 @@ export async function GET(req) {
       return NextResponse.json({ error: "Kullanıcı bulunamadı." }, { status: 404 });
     }
 
-    return NextResponse.json({ user });
+    const { id, password, ...userData } = user;
+
+    return NextResponse.json({ data: { ...userData }, status: 201 });
   } catch (error) {
     console.error("Hata:", error);
     return NextResponse.json({ error: "Bir hata oluştu." }, { status: 500 });

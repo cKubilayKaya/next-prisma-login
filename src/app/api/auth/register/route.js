@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import prisma from "@/lib/db";
 import userSchema from "@/validations/userSchema";
 
 export async function POST(req) {
   try {
-    const { fullName = "", userName, email, password } = await req.json();
+    const { fullName, userName, email, password } = await req.json();
 
     const { error } = userSchema.validate({ fullName, userName, email, password });
 
@@ -35,10 +34,14 @@ export async function POST(req) {
         email,
         password: hashedPassword,
       },
+      select: {
+        fullName: true,
+        userName: true,
+        email: true,
+      },
     });
 
-    // Kullanıcı oluşturulduktan sonra sadece kullanıcı bilgisi döndürülür
-    return NextResponse.json({ message: "Kullanıcı başarıyla oluşturuldu.", user: newUser }, { status: 201 });
+    return NextResponse.json({ message: "Kullanıcı başarıyla oluşturuldu.", user: newUser, status: 201 });
   } catch (error) {
     console.error("Hata:", error);
     return NextResponse.json({ error: "Bir hata oluştu." }, { status: 500 });
