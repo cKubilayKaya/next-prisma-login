@@ -1,7 +1,7 @@
 "use client";
 
 import { loginRequest, meRequest } from "@/services/auth/authService";
-import { setAuthenticatedUser } from "@/store/userSlice";
+import { setAuthenticatedUser } from "@/store/slices/userSlice";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";

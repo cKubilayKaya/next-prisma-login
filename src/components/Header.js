@@ -1,6 +1,6 @@
 "use client";
 import { logoutRequest } from "@/services/auth/authService";
-import { logoutAuthenticatedUser } from "@/store/userSlice";
+import { logoutAuthenticatedUser } from "@/store/slices/userSlice";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
