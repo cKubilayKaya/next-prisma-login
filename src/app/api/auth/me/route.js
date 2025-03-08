@@ -1,24 +1,12 @@
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
-import prisma from "@/lib/db";
+import { authHandler } from "@/lib/authHandler";
 
 export async function GET(req) {
   try {
-    const token = req.cookies.get("token")?.value;
+    const { user, response } = await authHandler(req);
 
-    if (!token) {
-      return NextResponse.json({ error: "Giriş yapmadınız." }, { status: 401 });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    const { email } = decoded;
-
-    const user = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (!user) {
-      return NextResponse.json({ error: "Kullanıcı bulunamadı." }, { status: 404 });
+    if (response) {
+      return response;
     }
 
     const { id, password, ...userData } = user;

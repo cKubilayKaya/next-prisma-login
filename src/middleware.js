@@ -7,31 +7,24 @@ export async function middleware(request) {
   const homepageUrl = new URL("/", request.url);
   const loginUrl = new URL("/auth/login", request.url);
 
+  const token = request.cookies.get("token")?.value;
+
+  if (!token) {
+    if (!isAuthPage) {
+      return NextResponse.redirect(loginUrl);
+    }
+    return NextResponse.next();
+  }
+
   try {
-    const token = request.cookies.get("token")?.value;
+    const secretKey = new TextEncoder().encode(process.env.JWT_SECRET_KEY);
+    await jwtVerify(token, secretKey);
 
-    if (!token) {
-      if (!isAuthPage) {
-        return NextResponse.redirect(loginUrl);
-      }
-      return NextResponse.next();
+    if (isAuthPage) {
+      return NextResponse.redirect(homepageUrl);
     }
 
-    try {
-      const secretKey = new TextEncoder().encode(process.env.JWT_SECRET_KEY);
-      await jwtVerify(token, secretKey);
-
-      if (isAuthPage) {
-        return NextResponse.redirect(homepageUrl);
-      }
-
-      return NextResponse.next();
-    } catch (verifyError) {
-      if (!isAuthPage) {
-        return NextResponse.redirect(loginUrl);
-      }
-      return NextResponse.next();
-    }
+    return NextResponse.next();
   } catch (error) {
     console.error("Middleware hatası:", error);
     return NextResponse.redirect(loginUrl);
