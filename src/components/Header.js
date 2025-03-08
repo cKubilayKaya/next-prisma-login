@@ -21,10 +21,14 @@ export default function Header() {
   return (
     <div className="bg-gray-900">
       <div className="container mx-auto flex items-center justify-between py-4">
-        <Link href="/">Anasayfa</Link>
+        <Link href="/" className="text-white">
+          Anasayfa
+        </Link>
         {authenticatedUser?.authenticatedUser?.email?.length >= 1 ? (
           <div className="flex items-center gap-4">
-            <Link href="/auth/profile">{authenticatedUser?.authenticatedUser?.email}</Link>
+            <Link href="/auth/profile" className="text-white">
+              {authenticatedUser?.authenticatedUser?.userName}
+            </Link>
             <button className="bg-white text-black px-4 py-2 rounded cursor-pointer" onClick={logoutHandler}>
               Çıkış Yap
             </button>

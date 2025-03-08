@@ -27,10 +27,10 @@ export default function Register() {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="bg-gray-900 p-16 rounded-2xl">
-          <h3 className="text-2xl mb-8 text-center">Register</h3>
+          <h3 className="text-2xl mb-8 text-center text-white">Register</h3>
           <input
             type="text"
-            className="border block mb-2 p-2 rounded border-gray-600 outline-0"
+            className="border block mb-2 p-2 rounded border-gray-600 outline-0 text-white"
             placeholder="Email"
             value={user?.email}
             name="email"
@@ -38,7 +38,7 @@ export default function Register() {
           />
           <input
             type="text"
-            className="border block mb-2 p-2 rounded border-gray-600 outline-0"
+            className="border block mb-2 p-2 rounded border-gray-600 outline-0 text-white"
             placeholder="Username"
             value={user?.userName}
             name="userName"
@@ -46,7 +46,7 @@ export default function Register() {
           />
           <input
             type="text"
-            className="border block mb-2 p-2 rounded border-gray-600 outline-0"
+            className="border block mb-2 p-2 rounded border-gray-600 outline-0 text-white"
             placeholder="fullName"
             value={user?.fullName}
             name="fullName"
@@ -54,7 +54,7 @@ export default function Register() {
           />
           <input
             type="password"
-            className="border block mb-2 p-2 rounded border-gray-600 outline-0"
+            className="border block mb-2 p-2 rounded border-gray-600 outline-0 text-white"
             placeholder="Password"
             value={user?.password}
             name="password"

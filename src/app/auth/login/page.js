@@ -31,10 +31,10 @@ export default function Login() {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="bg-gray-900 p-16 rounded-2xl">
-          <h3 className="text-2xl mb-8 text-center">Login</h3>
+          <h3 className="text-2xl mb-8 text-center text-white">Login</h3>
           <input
             type="text"
-            className="border block mb-2 p-2 rounded border-gray-600 outline-0"
+            className="border block mb-2 p-2 rounded border-gray-600 outline-0 text-white"
             placeholder="Email"
             value={user?.email}
             name="email"
@@ -42,7 +42,7 @@ export default function Login() {
           />
           <input
             type="password"
-            className="border block mb-2 p-2 rounded border-gray-600 outline-0"
+            className="border block mb-2 p-2 rounded border-gray-600 outline-0 text-white"
             placeholder="Password"
             value={user?.password}
             name="password"
