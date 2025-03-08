@@ -24,14 +24,18 @@ export async function PUT(req) {
       return NextResponse.json({ error: "Kullanıcı bulunamadı." }, { status: 404 });
     }
 
-    const { error } = profileSchema.validate({ email: data?.email, fullName: data?.fullName, userName: data?.userName });
+    const { error } = profileSchema.validate({ email: data?.email, fullName: data?.fullName, userName: data?.userName, password: data?.password });
     if (error) {
       return NextResponse.json({ error: error?.details?.[0]?.message }, { status: 400 });
     }
 
     const updatedUser = await prisma.user.update({
       where: { email },
-      data: data,
+      data: {
+        email: data?.email,
+        fullName: data?.fullName,
+        userName: data?.userName,
+      },
     });
 
     const { id, password, ...userData } = updatedUser;

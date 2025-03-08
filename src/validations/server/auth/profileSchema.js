@@ -5,6 +5,7 @@ const profileSchema = Joi.object({
   fullName: fullNameValidation(),
   email: emailValidation(),
   userName: userNameValidation(),
+  password: passwordValidation(),
 });
 
 export default profileSchema;
