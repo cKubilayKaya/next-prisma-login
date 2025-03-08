@@ -27,7 +27,7 @@ export default function ProviderComponent({ children }) {
   }, [dispatch]);
 
   if (loading) {
-    return ""; // Yükleniyor UI'si
+    return "";
   }
 
   return <>{children}</>;

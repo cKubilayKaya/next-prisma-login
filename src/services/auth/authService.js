@@ -36,4 +36,13 @@ const meRequest = async (data) => {
   }
 };
 
-export { registerRequest, loginRequest, logoutRequest, meRequest };
+const profileRequest = async (data) => {
+  try {
+    const response = await axiosInstance.put("/auth/profile", data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.error || "Bir hata oluştu");
+  }
+};
+
+export { registerRequest, loginRequest, logoutRequest, meRequest, profileRequest };

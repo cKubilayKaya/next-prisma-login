@@ -1,27 +1,35 @@
 "use client";
 
-import { registerRequest } from "@/services/auth/authService";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { profileRequest, registerRequest } from "@/services/auth/authService";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function Profile() {
   const authUser = useSelector((state) => state?.user);
-  const router = useRouter();
   const [user, setUser] = useState({
-    fullName: authUser?.fullName || "",
-    userName: authUser?.userName || "",
-    email: authUser?.email || "",
+    fullName: "",
+    userName: "",
+    email: "",
   });
+
+  useEffect(() => {
+    if (authUser) {
+      setUser({
+        fullName: authUser?.authenticatedUser?.fullName || "",
+        userName: authUser?.authenticatedUser?.userName || "",
+        email: authUser?.authenticatedUser?.email || "",
+      });
+    }
+  }, [authUser]);
 
   const changeHandler = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const registerHandler = async (e) => {
+  const profileHandler = async (e) => {
     e.preventDefault();
-    const res = await registerRequest(user);
-    res.status === 201 && router.push("/auth/login");
+    const res = await profileRequest(user);
+    console.log("res", res);
   };
 
   return (
@@ -56,7 +64,7 @@ export default function Profile() {
 
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full mt-4 cursor-pointer transition-colors"
-            onClick={registerHandler}
+            onClick={profileHandler}
           >
             Change
           </button>

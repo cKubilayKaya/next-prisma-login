@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import prisma from "@/lib/db";
-import userSchema from "@/validations/userSchema";
+import registerSchema from "@/validations/server/auth/registerSchema";
 
 export async function POST(req) {
   try {
     const { fullName, userName, email, password } = await req.json();
 
-    const { error } = userSchema.validate({ fullName, userName, email, password });
+    const { error } = registerSchema.validate({ fullName, userName, email, password });
 
     if (error) {
       return NextResponse.json({ error: error.details[0].message }, { status: 400 });

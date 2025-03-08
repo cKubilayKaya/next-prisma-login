@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import prisma from "@/lib/db";
 import jwt from "jsonwebtoken";
-import userSchema from "@/validations/userSchema";
+import loginSchema from "@/validations/server/auth/loginSchema";
 
 export async function POST(req) {
   const date = new Date();
@@ -12,7 +12,7 @@ export async function POST(req) {
   try {
     const { email, password } = await req.json();
 
-    const { error } = userSchema.validate({ email, password });
+    const { error } = loginSchema.validate({ email, password });
 
     if (error) {
       return NextResponse.json({ error: error.details[0].message }, { status: 400 });
